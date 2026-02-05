@@ -7,125 +7,124 @@ class Player {
         this.score = 0
     }
 
-    addScore() {
+    addScore(){
 
         this.score += this.scoreTime
-        this.scoreTime = 0
-
     }
 
     addScoreTime(cube1, cube2) {
 
-        if (cube1 === cube2) {
-
-            this.scoreTime = 0
-            return 'dobble'
-
-        }
-
         this.scoreTime += cube1
         this.scoreTime += cube2
 
+        if (cube1 === cube2) {
+
+            this.scoreTime = 0
+
+        }
+        
+        
+
     }
 
 }
 
-class Cube {
+const maxScore = document.getElementById('max-score')
+const player1 = new Player('1')
+const player2 = new Player('2')
+let turn = 0
+let rollButton = document.getElementById('roll')
+let scorePlyer1 = document.getElementById('number-current1')
+let generalscore1 = document.getElementById('number-score1')
+let numberTimeClick = 0
+let scorePlayer2 = document.getElementById('number-current2')
+let generalscore2 = document.getElementById('number-score2')
+rollButton.addEventListener('click', function() {
+    console.log(turn);
+    
+
+        let rollCube = Math.floor(Math.random() * 6) + 1
+        let rollCube2 = Math.floor(Math.random() * 6) + 1
+        console.log('1.', rollCube);
+        console.log('2', rollCube2);
+        
+        
+
+        if (turn % 2 === 0) {
+            player1.addScoreTime(rollCube, rollCube2)
+            numberTimeClick += 1
+            scorePlyer1.innerText = player1.scoreTime
+
+            if (numberTimeClick === 5) {
+
+            player1.addScore()
+            player1.scoreTime = 0
+            scorePlyer1.innerText = player1.scoreTime
+            generalscore1.innerText = player1.score
+            numberTimeClick = 0
+            rollButton.disabled = true
+
+            if (player1.score >= maxScore) {
+        
+                window.alert('player1 won')
+                location.reload()
+            }
 
 
-    constructor() {
+}}else if (turn % 2 === 1) {
 
-        this.result = 0
-    }
+    player2.addScoreTime(rollCube, rollCube2)
+        numberTimeClick += 1
+        scorePlayer2.innerText = player2.scoreTime
 
-    rollCube() {
+    if (numberTimeClick === 5) {
 
-        this.result = Math.floor(Math.random()* 5) + 1
-        return this.result
+        player2.addScore()
+        player2.scoreTime = 0
+        scorePlayer2.innerText = player2.scoreTime
+        generalscore2.innerText = player2.score
+        numberTimeClick = 0
+        rollButton.disabled = true
 
-    }
+        if (player2.score >= maxScore) {
+        
+            alert('player2 won')
+            window.location.reload()
+        }
 
-    resultCube() {
-
-
-        return `./cubeImages/cube${this.result}.png`
-    }
+}
 }
 
-function logic(maxScore, player1, player2) {
-
-        let result;
-        let turn = 'player1'
-        let scorePlyer1 = document.getElementById('number-current1')
-        for (let i = 0; i < 5; i ++) {
-
-            let rollButton = document.getElementById('roll')
-            rollButton.addEventListener('click', function() {
-                console.log(1);
-                
-
-                let rollCube = new Cube()
-                result = rollCube.rollButton()
-                scorePlyer1 += result
-                rollButton.style.backgroundImage = rollCube.resultCube()
-            })
-
-            clickHold(turn)
-            if (turn === 'player2') {
-
-                break
-            }
-        }
-
-        player1.score += scorePlyer1
-
-        let scorePlyer2 = document.getElementById('number-current1')
-        for (let i = 0; i < 5; i ++) {
-
-            let rollButton = document.getElementById('roll')
-            rollButton.addEventListener('click', function() {
-
-                let rollCube = new Cube()
-                result = rollCube.rollButton()
-                scorePlyer2 += result
-                rollButton.style.backgroundImage = rollCube.resultCube()
-            })
-
-            clickHold(turn)
-            if (turn === 'player1') {
-
-                break
-            }
-
-        }
-        player2.score += scorePlyer2
-
-    }
+})
+clickHold(rollButton, turn)
 
 
 
 
-function clickHold(turn) {
+
+
+
+
+
+
+function clickHold(button, turnPlayer) {
 
     const holdButton = document.getElementById('hold')
     holdButton.addEventListener('click', function() {
-
-        if (turn = 'player2') {
-
-            turn = 'player1'
-        } else {
-            turn = 'player2'
+        button.disabled = false
+        numberTimeClick = 0
+        if (turnPlayer === 0) {
+            
+            turn += 1
+        } else if (turnPlayer === 1) {
+            turn -= 1
         }
     })
 }
 
-function play() {
+let newGame = document.getElementById('new-game')
+newGame.addEventListener('click', function() {
 
-    const player1 = new Player('1')
-    const player2 = new Player('2')
+    location.reload()
 
-    logic(100, player1, player2)
-    
-}
-
-play()
+})
