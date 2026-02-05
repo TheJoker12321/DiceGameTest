@@ -30,7 +30,7 @@ class Player {
 }
 
 const maxScore = document.getElementById('max-score')
-console.log(maxScore);
+
 
 const player1 = new Player('1')
 const player2 = new Player('2')
