@@ -30,6 +30,8 @@ class Player {
 }
 
 const maxScore = document.getElementById('max-score')
+console.log(maxScore);
+
 const player1 = new Player('1')
 const player2 = new Player('2')
 let turn = 0
@@ -45,8 +47,6 @@ rollButton.addEventListener('click', function() {
 
         let rollCube = Math.floor(Math.random() * 6) + 1
         let rollCube2 = Math.floor(Math.random() * 6) + 1
-        console.log('1.', rollCube);
-        console.log('2', rollCube2);
         
         
 
@@ -64,7 +64,7 @@ rollButton.addEventListener('click', function() {
             numberTimeClick = 0
             rollButton.disabled = true
 
-            if (player1.score >= maxScore) {
+            if (player1.score >= 100) {
         
                 window.alert('player1 won')
                 location.reload()
@@ -86,7 +86,7 @@ rollButton.addEventListener('click', function() {
         numberTimeClick = 0
         rollButton.disabled = true
 
-        if (player2.score >= maxScore) {
+        if (player2.score >= 100) {
         
             alert('player2 won')
             window.location.reload()
